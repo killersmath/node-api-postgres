@@ -1,14 +1,14 @@
 var Joi = require('joi');
 
 const validators = {
-  getUserByIdValidator: {
-    params: {
+  getUserByIdValidator: Joi.object().keys({
+    params: Joi.object().keys({
       id: Joi.number()
         .positive()
         .required()
-    }
-  },
-  createUserValidator: {
+    })
+  }),
+  createUserValidator: Joi.object().keys({
     body: Joi.object().keys({
       name: Joi.string()
         .trim()
@@ -19,8 +19,8 @@ const validators = {
         .max(255)
         .required()
     })
-  },
-  updateUserValidator: {
+  }),
+  updateUserValidator: Joi.object().keys({
     params: Joi.object().keys({
       id: Joi.number()
         .positive()
@@ -36,14 +36,14 @@ const validators = {
           .max(255)
       })
       .min(1)
-  },
-  deleteUserValidator: {
-    params: {
+  }),
+  deleteUserValidator: Joi.object().keys({
+    params: Joi.object().keys({
       id: Joi.number()
         .positive()
         .required()
-    }
-  }
+    })
+  })
 };
 
 module.exports = validators;
