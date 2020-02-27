@@ -153,7 +153,7 @@ const deleteUser = async (request, response) => {
     }
 
     response.status(200).json({
-      status: 'success',
+      statusCode: 200,
       message: `User deleted with ID ${id}`
     });
   } catch (e) {
