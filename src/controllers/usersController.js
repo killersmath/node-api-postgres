@@ -2,12 +2,23 @@ const db = require('../database/db');
 
 const getUsers = async (request, response) => {
   try {
-    const query = 'select * FROM users ORDER BY id ASC';
+    const limit = request.query.limit ? parseInt(request.query.limit) : 50;
+    const offset = request.query.offset ? parseInt(request.query.offset) : 0;
 
-    const { rows } = await db.query(query);
+    const query = 'select * FROM users ORDER BY id ASC LIMIT $1 OFFSET $2';
+    const params = [limit, offset];
+
+    const { rowCount, rows } = await db.query(query, params);
 
     response.status(200).json({
       statusCode: 200,
+      metadata: {
+        resultset: {
+          count: rowCount,
+          offset: offset,
+          limit: limit
+        }
+      },
       results: rows
     });
   } catch (e) {
@@ -70,11 +81,36 @@ const createUser = async (request, response) => {
 
 const updateUser = async (request, response) => {
   try {
-    const id = parseInt(requet.params.id);
+    const id = parseInt(request.params.id);
     const { name, email } = request.body;
 
-    const query = 'UPDATE users SET name = $1, email = $2 WHERE id = $3';
-    const values = [name, email, id];
+    let type;
+
+    if (name && email) {
+      type = 3;
+    } else if (name) {
+      type = 2;
+    } else if (email) {
+      type = 1;
+    }
+
+    let query;
+    let values;
+
+    switch (type) {
+      case 3:
+        query = 'UPDATE users SET name = $1, email = $2 WHERE id = $3';
+        values = [name, email, id];
+        break;
+      case 2:
+        query = 'UPDATE users SET name = $1 WHERE id = $2';
+        values = [name, id];
+        break;
+      case 1:
+        query = 'UPDATE users SET email = $1 WHERE id = $2';
+        values = [email, id];
+        break;
+    }
 
     const { rowCount, rows } = await db.query(query, values);
 
