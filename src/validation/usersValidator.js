@@ -9,7 +9,7 @@ const validators = {
     }
   },
   createUserValidator: {
-    body: {
+    body: Joi.object().keys({
       name: Joi.string()
         .trim()
         .regex(/[a-zA-Z\s]{1,50}/)
@@ -18,24 +18,24 @@ const validators = {
         .email()
         .max(255)
         .required()
-    }
+    })
   },
   updateUserValidator: {
-    params: {
+    params: Joi.object().keys({
       id: Joi.number()
         .positive()
         .required()
-    },
-    body: {
-      name: Joi.string()
-        .trim()
-        .regex(/[a-zA-Z\s]{1,50}/)
-        .required(),
-      email: Joi.string()
-        .email()
-        .max(255)
-        .required()
-    }
+    }),
+    body: Joi.object()
+      .keys({
+        name: Joi.string()
+          .trim()
+          .regex(/[a-zA-Z\s]{1,50}/),
+        email: Joi.string()
+          .email()
+          .max(255)
+      })
+      .min(1)
   },
   deleteUserValidator: {
     params: {
