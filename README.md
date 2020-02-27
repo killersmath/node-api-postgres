@@ -110,7 +110,7 @@ Full URL: https://myurl.com/users/1
 
 Full URL: https://myurl.com/users
 
-#### 🔖 Request Body
+#### Request Body
 
     {
       "name": "User 1",
