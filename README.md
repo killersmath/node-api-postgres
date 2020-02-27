@@ -21,9 +21,18 @@
 
 ## 💎 How to Start the Server <a name = "how_start"></a>
 
-1. Clone the Repository
-2. open your terminal and run `npm install`
-3. start the server using the command `npm run start` or `npm run start-dev`
+1.  Clone the Repository
+2.  open your terminal and run `npm install`
+3.  create a file called `.env` on root folder and insert the follow informations
+
+        DB_USER=[Your_User_Crendential]
+        DB_PASSWORD=[Your_User_Password]
+        DB_HOST=[Your_Postgres_HostAddress]
+        DB_PORT=5432
+        DB_DATABASE=[Your_DatabaseName]
+
+4.  run the content of `init.sql` to create the necessary tables and content in your database.
+5.  start the server using the command `npm run start` or `npm run start-dev`
 
 `npm run start` -> start using node
 
