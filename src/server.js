@@ -27,7 +27,7 @@ app.use(cors(origin));
 //--- limiter (anti ddos)
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 150 // 5 requests,
+  max: 10 // 10 requests,
 });
 app.use(limiter);
 
